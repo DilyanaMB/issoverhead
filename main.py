@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime
+import smtplib
 
 MY_LAT = 42.697708
 MY_LONG = 23.321867
@@ -18,6 +19,10 @@ def is_in_range(latitude, longitude):
         return True
     return False
 
+def is_dark(sunrise, sunset, current_hour):
+    if current_hour <= sunrise and current_hour >= sunset:
+        return True
+    return False
 
 parameters = {
     "lat": MY_LAT,
@@ -33,6 +38,9 @@ sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
 
 time_now = datetime.now()
 
+if is_in_range(iss_latitude, iss_longitude):
+    if is_dark(sunrise, sunset, time_now.hour):
+        with
 # If the ISS is close to my current position
 # and it is currently dark
 # Then send me an email to tell me to look up.
